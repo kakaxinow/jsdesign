@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 判断条件过多，拆分成多个对象
+    // 策略模式
+    const strastegies = {
+        'd':salary=>salary*4,
+        'c':salary=>salary*4,
+        'b':salary=>salary*4,
+        'a':salary=>salary*4
+
+    };
+    //环境
+    let calculateBonus1 = function(level,salary){
+        return strastegies[level]?strastegies[level][salary]:salary;
+    }
+</script>
+</body>
+</html>
