@@ -1,3 +1,11 @@
+<!--
+ * @Author: zm
+ * @Date: 2020-04-28 10:37:19
+ * @LastEditTime: 2020-04-28 11:10:53
+ * @LastEditors: Please set LastEditors
+ * @Description: 用于类似VUE,数据同步响应等类似效果
+ * @FilePath: \lesson1d:\code\jsdesign\发布订阅.html
+ -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,13 +14,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<!-- /**
-*发布订阅模式
-* @description: 
-* @param {type} 
-* @return: 
-*/   -->
-
 <body>
 
     <script>
@@ -35,11 +36,10 @@
             $on(name, fn) {
                 (this.callbacks[name] || (this.callbacks[name] = [])).push(fn);
             }
-
         }
 
         let event = new Event();
-        console.log(event);
+        //console.log(event);
 
         event.$on('event1', function (arg) {
             console.log('事件1', arg);
@@ -50,6 +50,15 @@
         event.$on('event3', function (arg) {
             console.log('事件3', arg);
         })
+
+
+        event.$emit('event1',{name:'开课吧'});
+        event.$emit('event1',{name:'全栈'});
+
+        // event.$off('event1');
+        // event.$off('event2');
+
+        event.$emit('event3',{name:'事件3'});
     </script>
 
 </body>
