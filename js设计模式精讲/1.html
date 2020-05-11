@@ -11,7 +11,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>JS设计模式精讲</title>
+    <title>JS设计模式精讲----this、new、bind、call、apply</title>
 </head>
 
 <body>
@@ -74,12 +74,13 @@
         name: '汉堡',
         price: '5块钱',
         getPrice: function (place) {
-            console.log(place + this.price)
+            //console.log(place);
+            console.log(place + this.price);
         }
     }
-    food.getPrice('KFC ') // 浏览器中输出: "KFC 5块钱"
-    var getPrice1 = food.getPrice.bind({name: '鸡腿', price: '7块钱'}, '肯打鸡 ')
-    console.log(getPrice1);
+    //food.getPrice('KFC ') // 浏览器中输出: "KFC 5块钱"
+    var getPrice1 = food.getPrice.bind({name: '鸡腿', price: '7块钱'}, ['肯打鸡1','肯打鸡2']);
+    getPrice1();
     //getPrice1() // 浏览器中输出: "肯打鸡 7块钱"
     //关于 bind 的原理，我们可以使用 apply 方法自己实现一个 bind 看一下：
     // ES5 方式
@@ -100,6 +101,10 @@
             return self.apply(context, [...rest1, ...rest2])
         }
     }
+    //ES6 方式用了一些 ES6 的知识比如 rest 参数、数组解构，感兴趣的话可以看看后面的文章 <基础篇：ES6 中可
+    //能遇到的知识点> 中的详细介绍。
+    //注意： 如果你把 null 或 undefined 作为 this 的绑定对象传入 call 、 apply 、 bind ，这些值在调用时会被忽
+    //略，实际应用的是默认绑定规则。
 </script>
 </body>
 
