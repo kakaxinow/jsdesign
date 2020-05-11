@@ -1,0 +1,116 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-28 15:23:29
+ * @LastEditTime: 2020-04-28 17:00:11
+ * @LastEditors: Please set LastEditors
+ * @Description: 装饰者模式的定义：在不改变对象⾃身的基础上，在程
+                 序运⾏期间给对象动态地添加⽅法。常⻅应⽤，react的
+                 ⾼阶组件, 或者react-redux中的@connect 或者⾃⼰定
+                 义⼀些⾼阶组件
+ * @FilePath: \lesson1d:\code\jsdesign\装饰器模式.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // import React from 'react'
+        // const withLog = Component => {
+        //     // 类组件
+        //     class NewComponent extends
+        //     React.Component {
+        //         componentWillMount() {
+        //             console.time(`CompoentRender`)
+        //             console.log(`准备完毕了`)
+        //         }
+        //         render() {
+        //             return <Component {
+        //                     ...this.props
+        //                 } >
+        //                 <
+        //                 /Component>
+        //         }
+
+        //         componentDidMount() {
+        //             console.timeEnd(`CompoentRender`)
+        //             console.log(`渲染完毕了`)
+        //         }
+        //     }
+        //     return NewComponent
+        // }
+        // export {
+        //     withLog
+        // }
+        // xx = withLog(xx)
+        // @withLog
+        // class XX
+       
+
+
+
+
+        // export const connect = (mapStateToProps =
+        //     state => state, mapDispatchToProps = {}) => (WrapComponent) => {
+        //     return class ConnectComponent
+        //     extends React.Component {
+        //         static contextTypes = {
+        //             store: PropTypes.object
+
+        //         }
+        //         constructor(props,
+        //             context) {
+        //             super(props,
+        //                 context)
+        //             this.state = {
+        //                 props: {}
+        //             }
+        //         }
+        //         componentDidMount() {
+        //             const {
+        //                 store
+        //             } =
+        //             this.context
+        //             // 当前状态 update
+        //             store.subscribe(() => this.update())
+        //             this.update()
+        //         }
+        //         update() {
+        //             const {
+        //                 store
+        //             } =
+        //             this.context
+        //             const stateProps = mapStateToProps(store.getState())
+        //             const
+        //                 dispatchProps =
+        //                 bindActionCreators(mapDispatchToProps,
+        //                     store.dispatch)
+        //             this.setState({
+        //                 props: {
+
+        //                     ...this.state.props,
+
+        //                     ...stateProps,
+
+        //                     ...dispatchProps
+        //                 }
+        //             })
+        //         }
+        //         render() {
+        //             return <WrapComponent {
+        //                 ...this.state.props
+        //             } >
+        //             <
+        //             /WrapComponent>
+        //         }
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

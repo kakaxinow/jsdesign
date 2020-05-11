@@ -1,0 +1,83 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-28 08:03:10
+ * @LastEditTime: 2020-04-28 15:21:40
+ * @LastEditors: Please set LastEditors
+ * @Description: 为⼀个对象提供⼀个代⽤品或占位符，以便控制对它的访问
+ * @FilePath: \lesson1d:\code\jsdesign\代理模式.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <script>
+        var imgFunc = (function () {
+            var imgNode = document.createElement('img');
+            document.body.appendChild(imgNode);
+            return {
+                setSrc: function (src) {
+                    imgNode.src = src;
+                }
+            }
+        })();
+        var proxyImage = (function () {
+            var img = new Image();
+            img.onload = function () {
+                imgFunc.setSrc(this.src);
+            }
+            return {
+                setSrc: function (src) {
+                    // 先设置loading
+                    imgFunc.setSrc('./loading,gif');
+                    img.src = src;
+                }
+            }
+        })();
+        proxyImage.setSrc('./img/pic.png');
+
+        // ****************************函数的防抖节流，都是算是代理的⼀种**************************************
+        var synchronousFile = function (id) {
+            console.log('开始同步⽂件，id 为: ' +
+                id);
+        };
+        var proxySynchronousFile = (function () {
+            var cache = [], // 保存⼀段时间内需要同
+                步的 ID
+            开课吧web全栈架构师
+            timer; // 定时器
+            return function (id) {
+                cache.push(id);
+                if (timer) { // 保证不会覆盖
+                    已经启动的定时器
+                    return;
+                }
+                timer = setTimeout(function () {
+                    synchronousFile(cache.join(
+                        ','));
+                    clearTimeout(timer); // 清
+                    空定时器
+                    timer = null;
+                    cache.length = 0; // 清空 ID
+                    集合
+                }, 2000);
+            } // 2 秒后向本体发送需要同步的 ID 集合
+        })();
+        var checkbox =
+            document.getElementsByTagName('input');
+        for (var i = 0, c; c = checkbox[i++];) {
+            c.onclick = function () {
+                if (this.checked === true) {
+
+                    proxySynchronousFile(this.id);
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

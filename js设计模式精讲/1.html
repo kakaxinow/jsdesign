@@ -1,0 +1,106 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-11 11:05:32
+ * @LastEditTime: 2020-05-11 11:11:01
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \lesson1d:\code\jsdesign\js设计模式精讲\1.html
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS设计模式精讲</title>
+</head>
+
+<body>
+<!--this、new、bind、call、apply-->
+<script>
+    // this 在函数的指向有以下几种场景：
+    // 1. 作为构造函数被 new 调用；
+    // 2. 作为对象的方法使用；
+    // 3. 作为函数直接调用；
+    // 4. 被 call 、 apply 、 bind 调用；
+    // 5. 箭头函数中的 this
+    // 1.1 new 绑定
+    // 函数如果作为构造函数使用 new 调用时， this 绑定的是新创建的构造函数的实例。
+    // 实际上使用 new 调用构造函数时，会依次执行下面的操作：
+    // 1. 创建一个新对象；
+    // 2. 构造函数的 prototype 被赋值给这个新对象的 __proto__ ；
+    // 3. 将新对象赋给当前的 this ；
+    // 4. 执行构造函数；
+    // 5. 如果函数没有返回其他对象，那么 new 表达式中的函数调用会自动返回这个新对象，如果返回的不是对象将被忽略;
+    // 1.1 隐式绑定
+    function Foo() {
+        console.log(this)
+    }
+
+    //var bar = new Foo() // 输出: Foo 实例，this 就是 bar
+    // ******************************************************************************************************
+    // 1.2 显式绑定
+    // 通过 call 、 apply 、 bind 我们可以修改函数绑定的 this ，使其成为我们指定的对象。通过这些方法的第一个参
+    // 数我们可以显式地绑定 this 。
+    function foo(name, price) {
+        this.name = name
+        this.price = price
+    }
+
+    function Food(category, name, price) {
+        console.log("food中的this指向是:", this);
+        foo.call(this, name, price) // call 方式调用
+        // foo.apply(this, [name, price]) // apply 方式调用
+        this.category = category
+    }
+
+    //new Food('食品', '汉堡', '5块钱')
+    // 浏览器中输出: {name: "汉堡", price: "5块钱", category: "食品"}
+
+
+    //func.call(thisArg, arg1, arg2, ...) // call 用法
+    //func.apply(thisArg, [arg1, arg2, ...]) // apply 用法
+    function demo1() {
+        console.log('this指向是:', this, '-------', '参数:', arguments);
+    }
+
+    //call 和 apply 的区别是 call 方法接受的是参数列表，而 apply 方法接受的是一个参数数组
+    //demo1.call({}, 1);
+    //demo1.apply({}, [1, 2, 3])
+
+
+    // 而 bind 方法是设置 this 为给定的值，并返回一个新的函数，且在调用新函数时，将给定参数列表作为原函数的
+    //func.bind(thisArg[, arg1[, arg2[, ...]]]) // bind 用法
+    var food = {
+        name: '汉堡',
+        price: '5块钱',
+        getPrice: function (place) {
+            console.log(place + this.price)
+        }
+    }
+    food.getPrice('KFC ') // 浏览器中输出: "KFC 5块钱"
+    var getPrice1 = food.getPrice.bind({name: '鸡腿', price: '7块钱'}, '肯打鸡 ')
+    console.log(getPrice1);
+    //getPrice1() // 浏览器中输出: "肯打鸡 7块钱"
+    //关于 bind 的原理，我们可以使用 apply 方法自己实现一个 bind 看一下：
+    // ES5 方式
+    Function.prototype.bind = Function.prototype.bind || function () {
+        var self = this
+        var rest1 = Array.prototype.slice.call(arguments)
+        var context = rest1.shift()
+        return function () {
+            var rest2 = Array.prototype.slice.call(arguments)
+            return self.apply(context, rest1.concat(rest2))
+        }
+    }
+    // ES6 方式
+    Function.prototype.bind = Function.prototype.bind || function (...rest1) {
+        const self = this
+        const context = rest1.shift()
+        return function (...rest2) {
+            return self.apply(context, [...rest1, ...rest2])
+        }
+    }
+</script>
+</body>
+
+</html>
