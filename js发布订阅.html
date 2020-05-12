@@ -32,7 +32,6 @@
                     });
                 }
             }
-
             $on(name, fn) {
                 (this.callbacks[name] || (this.callbacks[name] = [])).push(fn);
             }
@@ -51,13 +50,10 @@
             console.log('事件3', arg);
         })
 
-
         event.$emit('event1',{name:'开课吧'});
         event.$emit('event1',{name:'全栈'});
-
         // event.$off('event1');
         // event.$off('event2');
-
         event.$emit('event3',{name:'事件3'});
     </script>
 
