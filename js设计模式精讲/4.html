@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS设计模式精讲----策略模式</title>
+</head>
+<body>
+<script>
+    //priceCalculate 函数随着折扣类型的增多， if-else 判断语句会变得越来越臃肿
+    function priceCalculate(discountType, price) {
+        // 满100减30 return price - Math.floor(price / 100) * 30
+        if (discountType === 'minus100_30') {
+            return price - Math.floor(price / 100) * 30;
+        }
+        //满200减80 return price - Math.floor(price / 200) * 80
+        else if (discountType === 'minus200_80') {
+            return price - Math.floor(price / 200) * 80
+        }
+        //8折 return price * 0.8
+        else if (discountType === 'percent80') {
+            return price * 0.8
+        }
+    }
+
+    //priceCalculate('minus100_30', 270) // 输出: 210
+    //priceCalculate('percent80', 250) // 输出: 200
+
+    /**
+     * 我们可以改造一下，将计算折扣的算算法法部部分分提提取取出出来来保存为一个对象，折扣的类类型型作作为为 key
+     * 这样索引的时候通 过过对对象象的的键键值值索索引引调调用用具具体体的的算算法法
+     */
+    const DiscountMap = {
+        minus100_30: function (price) {
+            return price - Math.floor(price / 100) * 30
+        },
+        minus200_80: function (price) {
+            return price - Math.floor(price / 200) * 80
+        },
+        percent80: function (price) {
+            return price * 0.8
+        }
+    }
+
+    function priceCalculate(discountType, price) {
+        return DiscountMap[discountType] && DiscountMap[discountType](price)
+    }
+
+    priceCalculate('minus100_30', 270)
+    priceCalculate('percent80', 250)
+    //这样算法的的实现和和算法的使用就被分开了，想添加新的算法也变得十分简单：
+    DiscountMap.minus150_40 = function (price) {
+        return price - Math.floor(price / 150) * 40;
+    }
+    // **************************如果你希望计算算法隐藏起来，那么可以借助 IIFE 使用闭包的方式，这时需要添加增加策略的入口，以方便扩展****
+    const PriceCalculate = (function() {
+        const DiscountMap = {
+            minus100_30: function (price) {
+                return price - Math.floor(price / 100) * 30
+            },
+            minus200_80: function (price) {
+                return price - Math.floor(price / 200) * 80
+            },
+            percent80: function (price) {
+                return price * 0.8
+            }
+        }
+
+        return {
+            priceClac: function(discountType, price) {
+                return DiscountMap[discountType] && DiscountMap[discountType](price)
+            },
+            //注册新计算方式 if (DiscountMap[discountType]) return DiscountMap[discountType] = fn
+            addStrategy: function(discountType, fn) {
+
+            }
+        }
+    })()
+
+
+
+</script>
+</body>
+</html>
